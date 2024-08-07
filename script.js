@@ -63,9 +63,10 @@ $(document).keydown(function(event){
 
 
 
+// to check if the answers are same 
+
 function checkAnswer(currentLevel){
     if(userClickedPattern[currentLevel] === gamePattern[currentLevel]){
-        console.log("Success");
         if(userClickedPattern.length === gamePattern.length){
             setTimeout(() => {
                 nextSequence();
@@ -73,6 +74,22 @@ function checkAnswer(currentLevel){
         }
     }
     else{
-        console.log("Fail");
+        var audio = new Audio("sounds/wrong.mp3");
+        audio.play();
+        $("body").addClass("game-over");
+        $("#level-title").html("Game Over, Press Any Key To Restart");
+        setTimeout(()=>{
+            $("body").removeClass("game-over");
+        },200);
+        startOver();
     }
+}
+
+
+// resetting values in case of game over 
+
+function startOver(){
+    gamePattern = [];
+    userClickedPattern = [];
+    level = 1;
 }
